@@ -1,0 +1,3 @@
+--ui mocha-typescript
+--compilers ts:ts-node/register
+test/*.ts
