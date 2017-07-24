@@ -3,7 +3,7 @@ import { Moment } from 'moment';
 
 export class List<T> extends Array<T> {
   public static sum<T>(arr: Array<T>, key: (x: T) => number) {
-    return arr.reduce((prev, cur, idx, x) => key(cur), 0);
+    return arr.reduce((prev, cur, idx, x) => prev + key(cur), 0);
   }
 
   public remove(element: T) {
