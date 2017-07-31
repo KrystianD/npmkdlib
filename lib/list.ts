@@ -14,7 +14,7 @@ export class List<T> extends Array<T> {
     this.length = 0;
   }
 
-  public copyFrom(array: Array<T>) {
+  public copyFrom(array: Array<T> | T[]) {
     this.length = 0;
     for (let obj of array)
       this.push(obj);
@@ -43,5 +43,40 @@ export class List<T> extends Array<T> {
   public append(array: T[]) {
     for (let obj of array)
       this.push(obj);
+  }
+
+  /**
+    * Returns the elements of an array that meet the condition specified in a callback function.
+    * @param callbackfn A function that accepts up to three arguments. The filter method calls the callbackfn function one time for each element in the array.
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+    */
+  public filter(callbackfn: (value: T, index: number, array: T[]) => any, thisArg?: any): List<T> {
+    let newList = new List<T>();
+    newList.copyFrom(super.filter(callbackfn, thisArg));
+    return newList;
+  }
+
+  /**
+    * Calls a defined callback function on each element of an array, and returns an array that contains the results.
+    * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.
+    * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+    */
+  public map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): List<U> {
+    let newList = new List<U>();
+    newList.copyFrom(super.map(callbackfn, thisArg));
+    return newList;
+  }
+
+  public unique(key: (x: T) => any = null): List<T> {
+    let newList = new List<T>();
+    let added = new Map<any, boolean>();
+    for (let item of this) {
+      let itemKey = key ? key(item) : item;
+      if (!added.has(itemKey)) {
+        newList.push(item);
+        added.set(item, true);
+      }
+    }
+    return newList;
   }
 }
