@@ -14,7 +14,7 @@ export class List<T> extends Array<T> {
     this.length = 0;
   }
 
-  public copyFrom(array: Array<T> | T[]) {
+  public copyFrom(array: Array<T> | List<T> | T[]) {
     this.length = 0;
     for (let obj of array)
       this.push(obj);
@@ -29,6 +29,7 @@ export class List<T> extends Array<T> {
         return (res as Moment).valueOf();
       return res as number;
     }
+
     if (reverse)
       this.sort((a, b) => conv(b) - conv(a));
     else
@@ -46,10 +47,10 @@ export class List<T> extends Array<T> {
   }
 
   /**
-    * Returns the elements of an array that meet the condition specified in a callback function.
-    * @param callbackfn A function that accepts up to three arguments. The filter method calls the callbackfn function one time for each element in the array.
-    * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
-    */
+   * Returns the elements of an array that meet the condition specified in a callback function.
+   * @param callbackfn A function that accepts up to three arguments. The filter method calls the callbackfn function one time for each element in the array.
+   * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+   */
   public filter(callbackfn: (value: T, index: number, array: T[]) => any, thisArg?: any): List<T> {
     let newList = new List<T>();
     newList.copyFrom(super.filter(callbackfn, thisArg));
@@ -57,10 +58,10 @@ export class List<T> extends Array<T> {
   }
 
   /**
-    * Calls a defined callback function on each element of an array, and returns an array that contains the results.
-    * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.
-    * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
-    */
+   * Calls a defined callback function on each element of an array, and returns an array that contains the results.
+   * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.
+   * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+   */
   public map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): List<U> {
     let newList = new List<U>();
     newList.copyFrom(super.map(callbackfn, thisArg));
