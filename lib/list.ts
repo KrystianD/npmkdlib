@@ -41,7 +41,7 @@ export class List<T> extends Array<T> {
     this[idx] = newElement;
   }
 
-  public append(array: T[]) {
+  public append(array: T[] | List<T> | Array<T>) {
     for (let obj of array)
       this.push(obj);
   }
@@ -51,9 +51,14 @@ export class List<T> extends Array<T> {
    * @param callbackfn A function that accepts up to three arguments. The filter method calls the callbackfn function one time for each element in the array.
    * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
    */
-  public filter(callbackfn: (value: T, index: number, array: T[]) => any, thisArg?: any): List<T> {
+  public kfilter(callbackfn: (value: T, index: number) => any): List<T> {
     let newList = new List<T>();
-    newList.copyFrom(super.filter(callbackfn, thisArg));
+    let index = 0;
+    for (let item of this) {
+      if (callbackfn(item, index))
+        newList.push(item);
+      index += 1;
+    }
     return newList;
   }
 
@@ -62,13 +67,30 @@ export class List<T> extends Array<T> {
    * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.
    * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
    */
-  public map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): List<U> {
+  public kmap<U>(callbackfn: (value: T, index: number) => U): List<U> {
     let newList = new List<U>();
-    newList.copyFrom(super.map(callbackfn, thisArg));
+    let index = 0;
+    for (let item of this) {
+      newList.push(callbackfn(item, index));
+      index += 1;
+    }
     return newList;
   }
 
-  public unique(key: (x: T) => any = null): List<T> {
+  /**
+   * Performs the specified action for each element in an array.
+   * @param callbackfn  A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.
+   * @param thisArg  An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+   */
+  public kforEach(callbackfn: (this: void, value: T, index: number) => void, thisArg: undefined): void {
+    let index = 0;
+    for (let item of this) {
+      callbackfn(item, index);
+      index += 1;
+    }
+  }
+
+  public kunique(key: (x: T) => any = null): List<T> {
     let newList = new List<T>();
     let added = new Map<any, boolean>();
     for (let item of this) {
