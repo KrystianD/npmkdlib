@@ -6,6 +6,11 @@ export class List<T> extends Array<T> {
     return arr.reduce((prev, cur, idx, x) => prev + key(cur), 0);
   }
 
+  public removeAll(elements: T[]) {
+    for (let item of elements)
+      this.remove(item);
+  }
+
   public remove(element: T) {
     this.splice(this.indexOf(element), 1);
   }
