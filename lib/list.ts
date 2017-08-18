@@ -2,10 +2,6 @@ import * as moment from 'moment';
 import { Moment } from 'moment';
 
 export class List<T> extends Array<T> {
-  public static sum<T>(arr: Array<T>, key: (x: T) => number) {
-    return arr.reduce((prev, cur, idx, x) => prev + key(cur), 0);
-  }
-
   public removeAll(elements: T[]) {
     for (let item of elements)
       this.remove(item);
@@ -87,7 +83,7 @@ export class List<T> extends Array<T> {
    * @param callbackfn  A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.
    * @param thisArg  An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
    */
-  public kforEach(callbackfn: (this: void, value: T, index: number) => void, thisArg: undefined): void {
+  public kforEach(callbackfn: (this: void, value: T, index: number) => void): void {
     let index = 0;
     for (let item of this) {
       callbackfn(item, index);
@@ -106,5 +102,9 @@ export class List<T> extends Array<T> {
       }
     }
     return newList;
+  }
+
+  public static sum<T>(arr: Array<T>, key: (x: T) => number = (x) => (x as any as number)) {
+    return arr.reduce((prev, cur, idx, x) => prev + key(cur), 0);
   }
 }
