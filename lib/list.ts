@@ -1,9 +1,26 @@
 import * as moment from 'moment';
 import { Moment } from 'moment';
 
+function compare(x: number | Date | Moment | string, y: number | Date | Moment | string) {
+  if (typeof x == "number" && typeof y == "number")
+    return x - y;
+
+  if (x instanceof Date && y instanceof Date)
+    return x.getDate() - y.getDate();
+
+  if (typeof x == "string" && typeof y == "string")
+    return x < y ? -1 : (x > y ? 1 : 0);
+
+  if (moment.isMoment(x) && moment.isMoment(y))
+    return (x as Moment).valueOf() - (y as Moment).valueOf();
+
+  throw new Error(`invalid types for comparison, x: ${typeof(x)}, y: ${typeof(y)}`);
+}
+
 export class List<T> extends Array<T> {
-  public static sum<T>(arr: Array<T>, key: (x: T) => number) {
-    return arr.reduce((prev, cur, idx, x) => key(cur), 0);
+  public removeAll(elements: T[]) {
+    for (let item of elements)
+      this.remove(item);
   }
 
   public remove(element: T) {
@@ -14,25 +31,46 @@ export class List<T> extends Array<T> {
     this.length = 0;
   }
 
-  public copyFrom(array: Array<T>) {
+  public copyFrom(array: Array<T> | List<T> | T[]) {
     this.length = 0;
     for (let obj of array)
       this.push(obj);
   }
 
-  public sortKey(key: (x: T) => number | Date | Moment, reverse = false) {
-    function conv(x: T): number {
-      let res = key(x);
-      if (res instanceof Date)
-        return res.getDate();
-      if (moment.isMoment(x))
-        return (res as Moment).valueOf();
-      return res as number;
+  public sortKey(key?: (x: T) => number | Date | Moment | string, reverse?: boolean): void
+  public sortKey(key?: (x: T) => (number | Date | Moment | string)[], reverse?: boolean[]): void
+  public sortKey(key?: (x: T) => any, reverse?: any): void {
+    return this.ksort(key, reverse);
+  }
+
+  public ksort(key?: (x: T) => number | Date | Moment | string, reverse?: boolean): void
+  public ksort(key?: (x: T) => (number | Date | Moment | string)[], reverse?: boolean[]): void
+  public ksort(key?: (x: T) => any, reverse?: any) {
+    if (key === undefined || key === null)
+      key = (x) => x;
+
+    function cmp(a: T, b: T): number {
+      let keyValA = key(a);
+      let keyValB = key(b);
+
+      if (Array.isArray(keyValA)) {
+        for (let i = 0; i < keyValA.length; i++) {
+          let rev = reverse ? (i >= reverse.length ? false : reverse[i]) : false;
+
+          let cmp = compare(keyValA[i], keyValB[i]);
+          cmp = rev ? -cmp : cmp;
+          if (cmp != 0)
+            return cmp;
+        }
+        return 0;
+      }
+      else {
+        let cmp = compare(keyValA, keyValB);
+        return reverse ? -cmp : cmp;
+      }
     }
-    if (reverse)
-      this.sort((a, b) => conv(b) - conv(a));
-    else
-      this.sort((a, b) => conv(a) - conv(b));
+
+    this.sort((a, b) => cmp(a, b));
   }
 
   public replaceItem(element: T, newElement: T) {
@@ -40,8 +78,77 @@ export class List<T> extends Array<T> {
     this[idx] = newElement;
   }
 
-  public append(array: T[]) {
+  public append(array: T[] | List<T> | Array<T>) {
     for (let obj of array)
       this.push(obj);
+  }
+
+  public kconcat(...items: (T[] | List<T> | Array<T>)[]): List<T> {
+    let newList = new List<T>();
+    newList.append(this);
+    for (let list of items)
+      newList.append(list);
+    return newList;
+  }
+
+  /**
+   * Returns the elements of an array that meet the condition specified in a callback function.
+   * @param callbackfn A function that accepts up to three arguments. The filter method calls the callbackfn function one time for each element in the array.
+   * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+   */
+  public kfilter(callbackfn: (value: T, index: number) => any): List<T> {
+    let newList = new List<T>();
+    let index = 0;
+    for (let item of this) {
+      if (callbackfn(item, index))
+        newList.push(item);
+      index += 1;
+    }
+    return newList;
+  }
+
+  /**
+   * Calls a defined callback function on each element of an array, and returns an array that contains the results.
+   * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.
+   * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+   */
+  public kmap<U>(callbackfn: (value: T, index: number) => U): List<U> {
+    let newList = new List<U>();
+    let index = 0;
+    for (let item of this) {
+      newList.push(callbackfn(item, index));
+      index += 1;
+    }
+    return newList;
+  }
+
+  /**
+   * Performs the specified action for each element in an array.
+   * @param callbackfn  A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.
+   * @param thisArg  An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
+   */
+  public kforEach(callbackfn: (this: void, value: T, index: number) => void, thisArg: undefined): void {
+    let index = 0;
+    for (let item of this) {
+      callbackfn(item, index);
+      index += 1;
+    }
+  }
+
+  public kunique(key: (x: T) => any = null): List<T> {
+    let newList = new List<T>();
+    let added = new Map<any, boolean>();
+    for (let item of this) {
+      let itemKey = key ? key(item) : item;
+      if (!added.has(itemKey)) {
+        newList.push(item);
+        added.set(item, true);
+      }
+    }
+    return newList;
+  }
+
+  public static sum<T>(arr: Array<T>, key: (x: T) => number) {
+    return arr.reduce((prev, cur, idx, x) => prev + key(cur), 0);
   }
 }
