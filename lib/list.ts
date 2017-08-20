@@ -70,14 +70,7 @@ export class List<T> extends Array<T> {
       }
     }
 
-<<<<<<< HEAD
     this.sort((a, b) => cmp(a, b));
-=======
-    if (reverse)
-      this.sort((a, b) => conv(b) - conv(a));
-    else
-      this.sort((a, b) => conv(a) - conv(b));
->>>>>>> 4075d9c00f1845604f1bf011ac5fd80af4dec26d
   }
 
   public replaceItem(element: T, newElement: T) {
@@ -90,7 +83,6 @@ export class List<T> extends Array<T> {
       this.push(obj);
   }
 
-<<<<<<< HEAD
   public kconcat(...items: (T[] | List<T> | Array<T>)[]): List<T> {
     let newList = new List<T>();
     newList.append(this);
@@ -99,8 +91,6 @@ export class List<T> extends Array<T> {
     return newList;
   }
 
-=======
->>>>>>> 4075d9c00f1845604f1bf011ac5fd80af4dec26d
   /**
    * Returns the elements of an array that meet the condition specified in a callback function.
    * @param callbackfn A function that accepts up to three arguments. The filter method calls the callbackfn function one time for each element in the array.
@@ -137,11 +127,7 @@ export class List<T> extends Array<T> {
    * @param callbackfn  A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.
    * @param thisArg  An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.
    */
-<<<<<<< HEAD
-  public kforEach(callbackfn: (this: void, value: T, index: number) => void, thisArg: undefined): void {
-=======
   public kforEach(callbackfn: (this: void, value: T, index: number) => void): void {
->>>>>>> 4075d9c00f1845604f1bf011ac5fd80af4dec26d
     let index = 0;
     for (let item of this) {
       callbackfn(item, index);
@@ -162,11 +148,7 @@ export class List<T> extends Array<T> {
     return newList;
   }
 
-<<<<<<< HEAD
-  public static sum<T>(arr: Array<T>, key: (x: T) => number) {
-=======
   public static sum<T>(arr: Array<T>, key: (x: T) => number = (x) => (x as any as number)) {
->>>>>>> 4075d9c00f1845604f1bf011ac5fd80af4dec26d
     return arr.reduce((prev, cur, idx, x) => prev + key(cur), 0);
   }
 }
