@@ -1,5 +1,6 @@
 import * as moment from 'moment';
 import { Moment } from 'moment';
+import Decimal from 'decimal.js/decimal.es6';
 
 function compare(x: number | Date | Moment | string, y: number | Date | Moment | string) {
   if (typeof x == "number" && typeof y == "number")
@@ -148,7 +149,47 @@ export class List<T> extends Array<T> {
     return newList;
   }
 
-  public static sum<T>(arr: Array<T>, key: (x: T) => number = (x) => (x as any as number)) {
-    return arr.reduce((prev, cur, idx, x) => prev + key(cur), 0);
+  public ksum(key: (x: T) => number = (x) => (x as any as number)): number {
+    let val = 0;
+    for (let item of this) {
+      let itemVal = key(item);
+      if (itemVal !== null && itemVal !== undefined)
+        val += itemVal;
+    }
+    return val;
+  }
+
+  public ksumDecimal(key: (x: T) => number = (x) => (x as any as number)): Decimal {
+    let val = new Decimal(0);
+    for (let item of this) {
+      let itemVal = key(item);
+      if (itemVal !== null && itemVal !== undefined)
+        val = val.add(itemVal);
+    }
+    return val;
+  }
+
+  public static sum<T>(arr: Array<T>, key: (x: T) => number): number {
+    return List.ksum(arr, key);
+  }
+
+  public static ksum<T>(arr: Array<T>, key: (x: T) => number = (x) => (x as any as number)): number {
+    let val = 0;
+    for (let item of arr) {
+      let itemVal = key(item);
+      if (itemVal !== null && itemVal !== undefined)
+        val += itemVal;
+    }
+    return val;
+  }
+
+  public static ksumDecimal<T>(arr: Array<T>, key: (x: T) => Decimal = (x) => (x as any as Decimal)): Decimal {
+    let val = new Decimal(0);
+    for (let item of arr) {
+      let itemVal = key(item);
+      if (itemVal !== null && itemVal !== undefined)
+        val = val.add(key(item));
+    }
+    return val;
   }
 }
