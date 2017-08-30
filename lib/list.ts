@@ -18,6 +18,68 @@ function compare(x: number | Date | Moment | string, y: number | Date | Moment |
   throw new Error(`invalid types for comparison, x: ${typeof(x)}, y: ${typeof(y)}`);
 }
 
+export class ChainableIterator<T> implements IterableIterator<T> {
+  constructor(private baseIterator: IterableIterator<T>) {
+  }
+
+  public next(): IteratorResult<T> {
+    return this.baseIterator.next();
+  }
+
+  [Symbol.iterator](): IterableIterator<T> {
+    return this;
+  }
+
+  public kfilter(callbackfn: (value: T, index: number) => any): ChainableIterator<T> {
+    let self = this;
+
+    let it = function* () {
+      let index = 0;
+      for (let item of self) {
+        if (callbackfn(item, index))
+          yield item;
+        index += 1;
+      }
+    };
+
+    return new ChainableIterator(it());
+  }
+
+  public kmap<U>(callbackfn: (value: T, index: number) => any): ChainableIterator<U> {
+    let self = this;
+
+    let it = function* () {
+      let index = 0;
+      for (let item of self) {
+        yield callbackfn(item, index);
+        index += 1;
+      }
+    };
+
+    return new ChainableIterator(it());
+  }
+
+  public ksum(key: (x: T) => number = (x) => (x as any as number)): number {
+    let val = 0;
+    for (let item of this) {
+      let itemVal = key(item);
+      if (itemVal !== null && itemVal !== undefined)
+        val += itemVal;
+    }
+    return val;
+  }
+
+  public ksumDecimal(key: (x: T) => number = (x) => (x as any as number)): Decimal {
+    let val = new Decimal(0);
+    for (let item of this) {
+      let itemVal = key(item);
+      if (itemVal !== null && itemVal !== undefined)
+        val = val.add(itemVal);
+    }
+    return val;
+  }
+}
+
 export class List<T> extends Array<T> {
   public removeAll(elements: T[]) {
     for (let item of elements)
@@ -108,6 +170,18 @@ export class List<T> extends Array<T> {
     return newList;
   }
 
+  public it(): ChainableIterator<T> {
+    let self = this;
+
+    let it = function* () {
+      let index = 0;
+      for (let item of self)
+        yield item;
+    };
+
+    return new ChainableIterator(it());
+  }
+
   /**
    * Calls a defined callback function on each element of an array, and returns an array that contains the results.
    * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.
@@ -165,6 +239,16 @@ export class List<T> extends Array<T> {
       let itemVal = key(item);
       if (itemVal !== null && itemVal !== undefined)
         val = val.add(itemVal);
+    }
+    return val;
+  }
+
+  public static ksumIterator<T>(it: IterableIterator<T>, key: (x: T) => number = (x) => (x as any as number)): number {
+    let val = 0;
+    for (let item of it) {
+      let itemVal = key(item);
+      if (itemVal !== null && itemVal !== undefined)
+        val += itemVal;
     }
     return val;
   }
