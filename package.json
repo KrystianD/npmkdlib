@@ -30,6 +30,9 @@
   },
   "dependencies": {
     "moment": "^2.18.1",
-    "typescript": "^2.4.2"
+    "typescript": "^2.4.2",
+    "decimal.js": "^7.2.1"
+  },
+  "browser": {
   }
 }

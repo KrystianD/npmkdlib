@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 import { Moment } from 'moment';
-import Decimal from 'decimal.js/decimal.es6';
+import Decimal from 'decimal.js';
 
 function compare(x: number | Date | Moment | string, y: number | Date | Moment | string) {
   if (typeof x == "number" && typeof y == "number")
