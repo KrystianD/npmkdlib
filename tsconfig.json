@@ -1,14 +1,20 @@
 {
   "compilerOptions": {
+    "rootDirs": [
+      "src",
+      "test"
+    ],
     "noImplicitAny": true,
-    "outDir": "./build/",
+    "outDir": "./dist/",
     "preserveConstEnums": true,
     "removeComments": true,
     "target": "es6",
     "moduleResolution": "node",
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "declaration": true
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "test"
   ]
 }
