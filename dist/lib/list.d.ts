@@ -28,7 +28,7 @@ export declare class List<T> extends Array<T> {
     kforEach(callbackfn: (this: void, value: T, index: number) => void): void;
     kunique(key?: (x: T) => any): List<T>;
     ksum(key?: (x: T) => number): number;
-    ksumDecimal(key?: (x: T) => number): Decimal;
+    ksumDecimal(key?: (x: T) => Decimal | number): Decimal;
     static ksumIterator<T>(it: IterableIterator<T>, key?: (x: T) => number): number;
     static sum<T>(arr: Array<T>, key: (x: T) => number): number;
     static ksum<T>(arr: Array<T>, key?: (x: T) => number): number;

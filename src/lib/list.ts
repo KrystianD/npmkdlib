@@ -233,7 +233,7 @@ export class List<T> extends Array<T> {
     return val;
   }
 
-  public ksumDecimal(key: (x: T) => number = (x) => (x as any as number)): Decimal {
+  public ksumDecimal(key: (x: T) => Decimal | number = (x) => (x as any as number)): Decimal {
     let val = new Decimal(0);
     for (let item of this) {
       let itemVal = key(item);
