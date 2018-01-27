@@ -267,7 +267,7 @@ export class List<T> extends Array<T> {
     return val;
   }
 
-  public static ksumDecimal<T>(arr: Array<T>, key: (x: T) => Decimal = (x) => (x as any as Decimal)): Decimal {
+  public static ksumDecimal<T>(arr: Array<T>, key: (x: T) => Decimal | number = (x) => (x as any as Decimal)): Decimal {
     let val = new Decimal(0);
     for (let item of arr) {
       let itemVal = key(item);
