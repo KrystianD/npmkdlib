@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "pretest": "webpack --config test/webpack.config.js",
-    "build": "rm -rf build; tsc && babel dist/ --out-dir dist",
+    "build": "rm -rf dist; tsc && babel dist/ --out-dir dist",
     "test": "mocha"
   },
   "author": "",

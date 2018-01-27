@@ -8,7 +8,7 @@ export declare class ChainableIterator<T> implements IterableIterator<T> {
     kfilter(callbackfn: (value: T, index: number) => any): ChainableIterator<T>;
     kmap<U>(callbackfn: (value: T, index: number) => any): ChainableIterator<U>;
     ksum(key?: (x: T) => number): number;
-    ksumDecimal(key?: (x: T) => number): Decimal;
+    ksumDecimal(key?: (x: T) => Decimal | number): Decimal;
 }
 export declare class List<T> extends Array<T> {
     removeAll(elements: T[]): void;
