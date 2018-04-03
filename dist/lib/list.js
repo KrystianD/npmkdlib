@@ -356,6 +356,25 @@ var List = exports.List = function (_extendableBuiltin2) {
             }
         }
     }, {
+        key: 'insert',
+        value: function insert(index, obj) {
+            this.splice(index, 0, obj);
+        }
+    }, {
+        key: 'insertAfter',
+        value: function insertAfter(ref, obj) {
+            var idx = this.indexOf(ref);
+            if (idx === -1) throw new Error("element not in list");
+            this.splice(idx + 1, 0, obj);
+        }
+    }, {
+        key: 'insertBefore',
+        value: function insertBefore(ref, obj) {
+            var idx = this.indexOf(ref);
+            if (idx === -1) throw new Error("element not in list");
+            this.splice(idx, 0, obj);
+        }
+    }, {
         key: 'remove',
         value: function remove(element) {
             this.splice(this.indexOf(element), 1);
@@ -424,6 +443,22 @@ var List = exports.List = function (_extendableBuiltin2) {
             this.sort(function (a, b) {
                 return cmp(a, b);
             });
+        }
+    }, {
+        key: 'ksorted',
+        value: function ksorted(key, reverse) {
+            var newList = new List();
+            newList.copyFrom(this);
+            newList.ksort(key, reverse);
+            return newList;
+        }
+    }, {
+        key: 'sorted',
+        value: function sorted(key, reverse) {
+            var newList = new List();
+            newList.copyFrom(this);
+            newList.ksort(key, reverse);
+            return newList;
         }
     }, {
         key: 'replaceItem',

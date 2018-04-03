@@ -1,11 +1,12 @@
 {
   "name": "kdlib",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "pretest": "webpack --config test/webpack.config.js",
+    "pretestx": "webpack --config test/webpack.config.js",
+    "pretest": "rm -rf dist; tsc && babel dist/ --out-dir dist",
     "build": "rm -rf dist; tsc && babel dist/ --out-dir dist",
     "test": "mocha"
   },

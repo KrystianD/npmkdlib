@@ -112,4 +112,54 @@ class ListTest {
     assert.deepEqual(list[2], ["A", 1]);
     assert.deepEqual(list[3], ["A", 2]);
   }
+
+  @test
+  testInsert() {
+    let list = new List<any>();
+    list.push("A");
+    list.push("B");
+    list.push("C");
+
+    list.insert(1, "X");
+
+    assert.equal(list[0], "A");
+    assert.equal(list[1], "X");
+    assert.equal(list[2], "B");
+    assert.equal(list[3], "C");
+  }
+
+  @test
+  testInsertBeforeAfter() {
+    let list = new List<any>();
+    list.push("A");
+    list.push("B");
+    list.push("C");
+
+    list.insertBefore("B", "X");
+    list.insertAfter("B", "Y");
+    list.insertAfter("C", "Z");
+
+    assert.equal(list[0], "A");
+    assert.equal(list[1], "X");
+    assert.equal(list[2], "B");
+    assert.equal(list[3], "Y");
+    assert.equal(list[4], "C");
+    assert.equal(list[5], "Z");
+  }
+
+  @test
+  testInsertBeforeNotExists() {
+    let list = new List<any>();
+    list.push("A");
+    list.push("B");
+    list.push("C");
+
+    assert.throw(() => {
+      list.insertBefore("E", "X");
+    });
+
+    assert.equal(list[0], "A");
+    assert.equal(list[1], "B");
+    assert.equal(list[2], "C");
+  }
 }

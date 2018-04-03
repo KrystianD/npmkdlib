@@ -12,6 +12,9 @@ export declare class ChainableIterator<T> implements IterableIterator<T> {
 }
 export declare class List<T> extends Array<T> {
     removeAll(elements: T[]): void;
+    insert(index: number, obj: T): void;
+    insertAfter(ref: T, obj: T): void;
+    insertBefore(ref: T, obj: T): void;
     remove(element: T): void;
     clear(): void;
     copyFrom(array: Array<T> | List<T> | T[]): void;
@@ -19,6 +22,10 @@ export declare class List<T> extends Array<T> {
     sortKey(key?: (x: T) => (number | Date | Moment | string)[], reverse?: boolean[]): void;
     ksort(key?: (x: T) => number | Date | Moment | string, reverse?: boolean): void;
     ksort(key?: (x: T) => (number | Date | Moment | string)[], reverse?: boolean[]): void;
+    ksorted(key?: (x: T) => number | Date | Moment | string, reverse?: boolean): void;
+    ksorted(key?: (x: T) => (number | Date | Moment | string)[], reverse?: boolean[]): void;
+    sorted(key?: (x: T) => number | Date | Moment | string, reverse?: boolean): void;
+    sorted(key?: (x: T) => (number | Date | Moment | string)[], reverse?: boolean[]): void;
     replaceItem(element: T, newElement: T): void;
     append(array: T[] | List<T> | Array<T>): void;
     kconcat(...items: (T[] | List<T> | Array<T>)[]): List<T>;

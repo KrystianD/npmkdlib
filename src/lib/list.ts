@@ -86,6 +86,24 @@ export class List<T> extends Array<T> {
       this.remove(item);
   }
 
+  public insert(index: number, obj: T) {
+    this.splice(index, 0, obj);
+  }
+
+  public insertAfter(ref: T, obj: T) {
+    let idx = this.indexOf(ref);
+    if (idx === -1)
+      throw new Error("element not in list");
+    this.splice(idx + 1, 0, obj);
+  }
+
+  public insertBefore(ref: T, obj: T) {
+    let idx = this.indexOf(ref);
+    if (idx === -1)
+      throw new Error("element not in list");
+    this.splice(idx, 0, obj);
+  }
+
   public remove(element: T) {
     this.splice(this.indexOf(element), 1);
   }
@@ -134,6 +152,24 @@ export class List<T> extends Array<T> {
     }
 
     this.sort((a, b) => cmp(a, b));
+  }
+
+  public ksorted(key?: (x: T) => number | Date | Moment | string, reverse?: boolean): void
+  public ksorted(key?: (x: T) => (number | Date | Moment | string)[], reverse?: boolean[]): void
+  public ksorted(key?: (x: T) => any, reverse?: any): List<T> {
+    let newList = new List<T>();
+    newList.copyFrom(this);
+    newList.ksort(key, reverse);
+    return newList;
+  }
+
+  public sorted(key?: (x: T) => number | Date | Moment | string, reverse?: boolean): void
+  public sorted(key?: (x: T) => (number | Date | Moment | string)[], reverse?: boolean[]): void
+  public sorted(key?: (x: T) => any, reverse?: any): List<T> {
+    let newList = new List<T>();
+    newList.copyFrom(this);
+    newList.ksort(key, reverse);
+    return newList;
   }
 
   public replaceItem(element: T, newElement: T) {
