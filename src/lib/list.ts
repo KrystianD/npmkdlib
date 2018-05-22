@@ -279,6 +279,16 @@ export class List<T> extends Array<T> {
     return val;
   }
 
+  public kjoinString(separator: string): string {
+    let output = "";
+    for (let item of this) {
+      if (output.length > 0)
+        output += separator;
+      output += item;
+    }
+    return output;
+  }
+
   public static ksumIterator<T>(it: IterableIterator<T>, key: (x: T) => number = (x) => (x as any as number)): number {
     let val = 0;
     for (let item of it) {
@@ -311,5 +321,15 @@ export class List<T> extends Array<T> {
         val = val.add(key(item));
     }
     return val;
+  }
+
+  public static kjoinString<T>(arr: Array<T>, separator: string): string {
+    let output = "";
+    for (let item of arr) {
+      if (output.length > 0)
+        output += separator;
+      output += item;
+    }
+    return output;
   }
 }

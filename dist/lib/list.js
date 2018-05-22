@@ -813,24 +813,20 @@ var List = exports.List = function (_extendableBuiltin2) {
 
             return val;
         }
-    }], [{
-        key: 'ksumIterator',
-        value: function ksumIterator(it) {
-            var key = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function (x) {
-                return x;
-            };
-
-            var val = 0;
+    }, {
+        key: 'kjoinString',
+        value: function kjoinString(separator) {
+            var output = "";
             var _iteratorNormalCompletion16 = true;
             var _didIteratorError16 = false;
             var _iteratorError16 = undefined;
 
             try {
-                for (var _iterator16 = it[Symbol.iterator](), _step16; !(_iteratorNormalCompletion16 = (_step16 = _iterator16.next()).done); _iteratorNormalCompletion16 = true) {
+                for (var _iterator16 = this[Symbol.iterator](), _step16; !(_iteratorNormalCompletion16 = (_step16 = _iterator16.next()).done); _iteratorNormalCompletion16 = true) {
                     var item = _step16.value;
 
-                    var itemVal = key(item);
-                    if (itemVal !== null && itemVal !== undefined) val += itemVal;
+                    if (output.length > 0) output += separator;
+                    output += item;
                 }
             } catch (err) {
                 _didIteratorError16 = true;
@@ -847,16 +843,11 @@ var List = exports.List = function (_extendableBuiltin2) {
                 }
             }
 
-            return val;
+            return output;
         }
-    }, {
-        key: 'sum',
-        value: function sum(arr, key) {
-            return List.ksum(arr, key);
-        }
-    }, {
-        key: 'ksum',
-        value: function ksum(arr) {
+    }], [{
+        key: 'ksumIterator',
+        value: function ksumIterator(it) {
             var key = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function (x) {
                 return x;
             };
@@ -867,7 +858,7 @@ var List = exports.List = function (_extendableBuiltin2) {
             var _iteratorError17 = undefined;
 
             try {
-                for (var _iterator17 = arr[Symbol.iterator](), _step17; !(_iteratorNormalCompletion17 = (_step17 = _iterator17.next()).done); _iteratorNormalCompletion17 = true) {
+                for (var _iterator17 = it[Symbol.iterator](), _step17; !(_iteratorNormalCompletion17 = (_step17 = _iterator17.next()).done); _iteratorNormalCompletion17 = true) {
                     var item = _step17.value;
 
                     var itemVal = key(item);
@@ -891,13 +882,18 @@ var List = exports.List = function (_extendableBuiltin2) {
             return val;
         }
     }, {
-        key: 'ksumDecimal',
-        value: function ksumDecimal(arr) {
+        key: 'sum',
+        value: function sum(arr, key) {
+            return List.ksum(arr, key);
+        }
+    }, {
+        key: 'ksum',
+        value: function ksum(arr) {
             var key = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function (x) {
                 return x;
             };
 
-            var val = new _decimal2.default(0);
+            var val = 0;
             var _iteratorNormalCompletion18 = true;
             var _didIteratorError18 = false;
             var _iteratorError18 = undefined;
@@ -907,7 +903,7 @@ var List = exports.List = function (_extendableBuiltin2) {
                     var item = _step18.value;
 
                     var itemVal = key(item);
-                    if (itemVal !== null && itemVal !== undefined) val = val.add(key(item));
+                    if (itemVal !== null && itemVal !== undefined) val += itemVal;
                 }
             } catch (err) {
                 _didIteratorError18 = true;
@@ -925,6 +921,74 @@ var List = exports.List = function (_extendableBuiltin2) {
             }
 
             return val;
+        }
+    }, {
+        key: 'ksumDecimal',
+        value: function ksumDecimal(arr) {
+            var key = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function (x) {
+                return x;
+            };
+
+            var val = new _decimal2.default(0);
+            var _iteratorNormalCompletion19 = true;
+            var _didIteratorError19 = false;
+            var _iteratorError19 = undefined;
+
+            try {
+                for (var _iterator19 = arr[Symbol.iterator](), _step19; !(_iteratorNormalCompletion19 = (_step19 = _iterator19.next()).done); _iteratorNormalCompletion19 = true) {
+                    var item = _step19.value;
+
+                    var itemVal = key(item);
+                    if (itemVal !== null && itemVal !== undefined) val = val.add(key(item));
+                }
+            } catch (err) {
+                _didIteratorError19 = true;
+                _iteratorError19 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion19 && _iterator19.return) {
+                        _iterator19.return();
+                    }
+                } finally {
+                    if (_didIteratorError19) {
+                        throw _iteratorError19;
+                    }
+                }
+            }
+
+            return val;
+        }
+    }, {
+        key: 'kjoinString',
+        value: function kjoinString(arr, separator) {
+            var output = "";
+            var _iteratorNormalCompletion20 = true;
+            var _didIteratorError20 = false;
+            var _iteratorError20 = undefined;
+
+            try {
+                for (var _iterator20 = arr[Symbol.iterator](), _step20; !(_iteratorNormalCompletion20 = (_step20 = _iterator20.next()).done); _iteratorNormalCompletion20 = true) {
+                    var item = _step20.value;
+
+                    if (output.length > 0) output += separator;
+                    output += item;
+                }
+            } catch (err) {
+                _didIteratorError20 = true;
+                _iteratorError20 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion20 && _iterator20.return) {
+                        _iterator20.return();
+                    }
+                } finally {
+                    if (_didIteratorError20) {
+                        throw _iteratorError20;
+                    }
+                }
+            }
+
+            return output;
         }
     }]);
 

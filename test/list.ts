@@ -162,4 +162,20 @@ class ListTest {
     assert.equal(list[1], "B");
     assert.equal(list[2], "C");
   }
+
+  @test
+  testJoinString() {
+    let list = new List<any>();
+    list.push("A");
+    list.push("B");
+    list.push("C");
+
+    assert.equal(list.kjoinString(""), "ABC");
+    assert.equal(list.kjoinString(","), "A,B,C");
+    assert.equal(list.kjoinString(", "), "A, B, C");
+
+    let list2 = new List<any>();
+
+    assert.equal(list2.kjoinString(","), "");
+  }
 }

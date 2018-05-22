@@ -36,8 +36,10 @@ export declare class List<T> extends Array<T> {
     kunique(key?: (x: T) => any): List<T>;
     ksum(key?: (x: T) => number): number;
     ksumDecimal(key?: (x: T) => Decimal | number): Decimal;
+    kjoinString(separator: string): string;
     static ksumIterator<T>(it: IterableIterator<T>, key?: (x: T) => number): number;
     static sum<T>(arr: Array<T>, key: (x: T) => number): number;
     static ksum<T>(arr: Array<T>, key?: (x: T) => number): number;
     static ksumDecimal<T>(arr: Array<T>, key?: (x: T) => Decimal | number): Decimal;
+    static kjoinString<T>(arr: Array<T>, separator: string): string;
 }
