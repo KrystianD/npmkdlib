@@ -1,6 +1,6 @@
 {
   "name": "kdlib",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "author": "Krystian Dużyński <krystian.duzynski@gmail.com>",
   "description": "",
   "main": "dist/index.js",
