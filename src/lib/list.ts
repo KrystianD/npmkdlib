@@ -81,9 +81,11 @@ export class ChainableIterator<T> implements IterableIterator<T> {
 }
 
 export class List<T> extends Array<T> {
+
   public removeAll(elements: T[]) {
     for (let item of elements)
-      this.remove(item);
+      while (this.contains(item))
+        this.remove(item);
   }
 
   public insert(index: number, obj: T) {
@@ -110,6 +112,10 @@ export class List<T> extends Array<T> {
 
   public clear() {
     this.length = 0;
+  }
+
+  public contains(element: T) {
+    return this.indexOf(element) != -1;
   }
 
   public copyFrom(array: Array<T> | List<T> | T[]) {
@@ -287,6 +293,12 @@ export class List<T> extends Array<T> {
       output += item;
     }
     return output;
+  }
+
+  public static create<T>(iterable: Iterable<T> | Array<T> | T[]): List<T> {
+    const list = new List<T>();
+    list.copyFrom(Array.from(iterable));
+    return list;
   }
 
   public static ksumIterator<T>(it: IterableIterator<T>, key: (x: T) => number = (x) => (x as any as number)): number {

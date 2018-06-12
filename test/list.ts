@@ -18,6 +18,51 @@ class ListTest {
   }
 
   @test
+  testRemove() {
+    let list = new List<any>();
+    list.push("A");
+    list.push("A");
+    list.push("B");
+
+    assert.equal(list[0], "A");
+    assert.equal(list[1], "A");
+    assert.equal(list[2], "B");
+
+    list.remove("A");
+
+    assert.equal(list[0], "A");
+    assert.equal(list[1], "B");
+  }
+
+  @test
+  testRemoveAll() {
+    let list = new List<any>();
+    list.push("A");
+    list.push("A");
+    list.push("B");
+    list.push("C");
+
+    assert.equal(list[0], "A");
+    assert.equal(list[1], "A");
+    assert.equal(list[2], "B");
+    assert.equal(list[3], "C");
+
+    list.removeAll(["A", "B"]);
+
+    assert.equal(list[0], "C");
+  }
+
+  @test
+  testContains() {
+    let list = new List<any>();
+    list.push("A");
+    list.push("B");
+
+    assert.isTrue(list.contains("A"));
+    assert.isFalse(list.contains("C"));
+  }
+
+  @test
   testSortSimple1() {
     let list = new List<any>();
     list.push("B");
@@ -177,5 +222,20 @@ class ListTest {
     let list2 = new List<any>();
 
     assert.equal(list2.kjoinString(","), "");
+  }
+
+  @test
+  testCreate() {
+    let q: string[] = ["A", "B", "C"];
+    let list1 = List.create(q);
+
+    let list2 = List.create<string>(["A", "B", "C"]);
+
+    assert.equal(list1[0], "A");
+    assert.equal(list1[1], "B");
+    assert.equal(list1[2], "C");
+    assert.equal(list2[0], "A");
+    assert.equal(list2[1], "B");
+    assert.equal(list2[2], "C");
   }
 }

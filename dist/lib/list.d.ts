@@ -17,6 +17,7 @@ export declare class List<T> extends Array<T> {
     insertBefore(ref: T, obj: T): void;
     remove(element: T): void;
     clear(): void;
+    contains(element: T): boolean;
     copyFrom(array: Array<T> | List<T> | T[]): void;
     sortKey(key?: (x: T) => number | Date | Moment | string, reverse?: boolean): void;
     sortKey(key?: (x: T) => (number | Date | Moment | string)[], reverse?: boolean[]): void;
@@ -37,6 +38,7 @@ export declare class List<T> extends Array<T> {
     ksum(key?: (x: T) => number): number;
     ksumDecimal(key?: (x: T) => Decimal | number): Decimal;
     kjoinString(separator: string): string;
+    static create<T>(iterable: Iterable<T> | Array<T> | T[]): List<T>;
     static ksumIterator<T>(it: IterableIterator<T>, key?: (x: T) => number): number;
     static sum<T>(arr: Array<T>, key: (x: T) => number): number;
     static ksum<T>(arr: Array<T>, key?: (x: T) => number): number;

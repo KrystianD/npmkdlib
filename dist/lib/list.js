@@ -338,7 +338,9 @@ var List = exports.List = function (_extendableBuiltin2) {
                 for (var _iterator5 = elements[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
                     var item = _step5.value;
 
-                    this.remove(item);
+                    while (this.contains(item)) {
+                        this.remove(item);
+                    }
                 }
             } catch (err) {
                 _didIteratorError5 = true;
@@ -383,6 +385,11 @@ var List = exports.List = function (_extendableBuiltin2) {
         key: 'clear',
         value: function clear() {
             this.length = 0;
+        }
+    }, {
+        key: 'contains',
+        value: function contains(element) {
+            return this.indexOf(element) != -1;
         }
     }, {
         key: 'copyFrom',
@@ -846,6 +853,13 @@ var List = exports.List = function (_extendableBuiltin2) {
             return output;
         }
     }], [{
+        key: 'create',
+        value: function create(iterable) {
+            var list = new List();
+            list.copyFrom(Array.from(iterable));
+            return list;
+        }
+    }, {
         key: 'ksumIterator',
         value: function ksumIterator(it) {
             var key = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function (x) {
