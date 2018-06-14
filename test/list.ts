@@ -6,6 +6,22 @@ import { suite, test } from "mocha-typescript";
 @suite
 class ListTest {
   @test
+  testConstructor() {
+    let list1 = new List<string>(["A", "B"]);
+
+    assert.equal(list1[0], "A");
+    assert.equal(list1[1], "B");
+
+    let list2 = new List<string>(5);
+
+    assert.equal(list2.length, 5);
+
+    let list3 = new List<string>();
+
+    assert.equal(list3.length, 0);
+  }
+
+  @test
   testPush() {
     let list = new List<string>();
     list.push("A");

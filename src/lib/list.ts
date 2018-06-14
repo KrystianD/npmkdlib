@@ -80,7 +80,31 @@ export class ChainableIterator<T> implements IterableIterator<T> {
   }
 }
 
+function isArray(value: any) {
+  return value && typeof value === 'object' && value.constructor === Array;
+}
+
 export class List<T> extends Array<T> {
+
+  constructor(arrayLength?: number)
+  constructor(items?: T[])
+  constructor(arrayLengthOrItems: any = null) {
+    if (arrayLengthOrItems === null) {
+      super();
+      return;
+    }
+
+    if (typeof arrayLengthOrItems == 'number') {
+      super(arrayLengthOrItems);
+      return;
+    }
+
+    if (isArray(arrayLengthOrItems)) {
+      super();
+      this.copyFrom(arrayLengthOrItems);
+      return;
+    }
+  }
 
   public removeAll(elements: T[]) {
     for (let item of elements)
