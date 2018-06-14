@@ -392,6 +392,11 @@ var List = exports.List = function (_extendableBuiltin2) {
             return this.indexOf(element) != -1;
         }
     }, {
+        key: 'at',
+        value: function at(index) {
+            return this[index];
+        }
+    }, {
         key: 'copyFrom',
         value: function copyFrom(array) {
             this.length = 0;

@@ -18,6 +18,7 @@ export declare class List<T> extends Array<T> {
     remove(element: T): void;
     clear(): void;
     contains(element: T): boolean;
+    at(index: number): T;
     copyFrom(array: Array<T> | List<T> | T[]): void;
     sortKey(key?: (x: T) => number | Date | Moment | string, reverse?: boolean): void;
     sortKey(key?: (x: T) => (number | Date | Moment | string)[], reverse?: boolean[]): void;

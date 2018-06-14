@@ -118,6 +118,10 @@ export class List<T> extends Array<T> {
     return this.indexOf(element) != -1;
   }
 
+  public at(index: number): T {
+    return this[index];
+  }
+
   public copyFrom(array: Array<T> | List<T> | T[]) {
     this.length = 0;
     for (let obj of array)

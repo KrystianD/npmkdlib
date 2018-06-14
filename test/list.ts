@@ -11,6 +11,7 @@ class ListTest {
     list.push("A");
 
     assert.equal(list[0], "A");
+    assert.equal(list.at(0), "A");
 
     list.clear();
 
