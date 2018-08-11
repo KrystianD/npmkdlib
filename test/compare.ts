@@ -119,5 +119,9 @@ class CompareTest {
 
     assert.isTrue(Comparer.equals(new CustomTypeValid("abc"), new CustomTypeValid("abc")));
     assert.isFalse(Comparer.equals(new CustomTypeValid("abcd"), new CustomTypeValid("abc")));
+
+    const customType = new CustomTypeInvalid("abc");
+
+    Comparer.equals(customType, customType)
   }
 }

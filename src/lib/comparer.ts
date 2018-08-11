@@ -30,15 +30,21 @@ export function compare<T extends number | string | object | Date | Moment | Dec
 }
 
 export function equals<T extends number | string | object | Date | Moment | Decimal>(x: T, y: T): boolean {
+  if (x === undefined) x = null;
+  if (y === undefined) y = null;
+
+  if (x === null && y !== null)
+    return false;
+  if (x !== null && y === null)
+    return false;
+  if (x === null && y === null)
+    return true;
+
+  if (x === y)
+    return true;
+
   const _x = toScalar(x);
   const _y = toScalar(y);
-
-  if (_x === null && _y !== null)
-    return false;
-  if (_x !== null && _y === null)
-    return false;
-  if (_x === null && _y === null)
-    return true;
 
   if ((typeof _x) === (typeof _y))
     return _x === _y;
