@@ -33,6 +33,13 @@ export function equals<T extends number | string | object | Date | Moment | Deci
   const _x = toScalar(x);
   const _y = toScalar(y);
 
+  if (_x === null && _y !== null)
+    return false;
+  if (_x !== null && _y === null)
+    return false;
+  if (_x === null && _y === null)
+    return true;
+
   if ((typeof _x) === (typeof _y))
     return _x === _y;
 

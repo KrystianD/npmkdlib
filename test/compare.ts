@@ -97,6 +97,10 @@ class CompareTest {
     assert.isTrue(Comparer.equals("A", "A"));
     assert.isFalse(Comparer.equals("A", "B"));
 
+    assert.isFalse(Comparer.equals(null, 2));
+    assert.isFalse(Comparer.equals(2, null));
+    assert.isTrue(Comparer.equals(null, null));
+
     assert.isTrue(Comparer.equals(new Decimal("5.5"), new Decimal("5.5")));
 
     assert.isTrue(Comparer.equals(
