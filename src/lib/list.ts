@@ -1,22 +1,6 @@
-import * as moment from 'moment';
 import { Moment } from 'moment';
 import Decimal from 'decimal.js';
-
-function compare(x: number | Date | Moment | string, y: number | Date | Moment | string) {
-  if (typeof x == "number" && typeof y == "number")
-    return x - y;
-
-  if (x instanceof Date && y instanceof Date)
-    return x.getDate() - y.getDate();
-
-  if (typeof x == "string" && typeof y == "string")
-    return x < y ? -1 : (x > y ? 1 : 0);
-
-  if (moment.isMoment(x) && moment.isMoment(y))
-    return (x as Moment).valueOf() - (y as Moment).valueOf();
-
-  throw new Error(`invalid types for comparison, x: ${typeof(x)}, y: ${typeof(y)}`);
-}
+import * as Comparer from './comparer';
 
 export class ChainableIterator<T> implements IterableIterator<T> {
   constructor(private baseIterator: IterableIterator<T>) {
@@ -89,21 +73,12 @@ export class List<T> extends Array<T> {
   constructor(arrayLength?: number)
   constructor(items?: T[])
   constructor(arrayLengthOrItems: any = null) {
-    if (arrayLengthOrItems === null) {
+    if (arrayLengthOrItems === null)
       super();
-      return;
-    }
-
-    if (typeof arrayLengthOrItems == 'number') {
+    else if (typeof arrayLengthOrItems == 'number')
       super(arrayLengthOrItems);
-      return;
-    }
-
-    if (isArray(arrayLengthOrItems)) {
-      super();
-      this.copyFrom(arrayLengthOrItems);
-      return;
-    }
+    else if (isArray(arrayLengthOrItems))
+      super(...arrayLengthOrItems);
   }
 
   public removeAll(elements: T[]) {
@@ -172,7 +147,7 @@ export class List<T> extends Array<T> {
         for (let i = 0; i < keyValA.length; i++) {
           let rev = reverse ? (i >= reverse.length ? false : reverse[i]) : false;
 
-          let cmp = compare(keyValA[i], keyValB[i]);
+          let cmp = Comparer.compare(keyValA[i], keyValB[i]);
           cmp = rev ? -cmp : cmp;
           if (cmp != 0)
             return cmp;
@@ -180,7 +155,7 @@ export class List<T> extends Array<T> {
         return 0;
       }
       else {
-        let cmp = compare(keyValA, keyValB);
+        let cmp = Comparer.compare(keyValA, keyValB);
         return reverse ? -cmp : cmp;
       }
     }
@@ -208,6 +183,8 @@ export class List<T> extends Array<T> {
 
   public replaceItem(element: T, newElement: T) {
     let idx = this.indexOf(element);
+    if (idx === -1)
+      throw new Error("element not in list");
     this[idx] = newElement;
   }
 

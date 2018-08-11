@@ -1,4 +1,4 @@
-import { List } from '..';
+import { List } from '../src';
 
 import { assert } from "chai";
 import { suite, test } from "mocha-typescript";
