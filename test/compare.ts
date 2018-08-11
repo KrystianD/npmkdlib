@@ -24,6 +24,8 @@ class CompareTest {
     assert.strictEqual(Comparer.toScalar(2), 2);
     assert.strictEqual(Comparer.toScalar(2.5), 2.5);
     assert.strictEqual(Comparer.toScalar("A"), "A");
+    assert.strictEqual(Comparer.toScalar(true), 1);
+    assert.strictEqual(Comparer.toScalar(false), 0);
   }
 
   @test
@@ -61,6 +63,10 @@ class CompareTest {
     assert.strictEqual(Comparer.compare(2, 1), 1);
     assert.strictEqual(Comparer.compare(1, 3), -2);
     assert.strictEqual(Comparer.compare(3, 1), 2);
+    assert.strictEqual(Comparer.compare(true, false), 1);
+    assert.strictEqual(Comparer.compare(false, true), -1);
+    assert.strictEqual(Comparer.compare(false, false), 0);
+    assert.strictEqual(Comparer.compare(true, true), 0);
 
     assert.strictEqual(Comparer.compare(new Decimal("5.5"), new Decimal("2.2")), 3.3);
 
@@ -94,6 +100,11 @@ class CompareTest {
     assert.isFalse(Comparer.equals(1, 3));
     assert.isFalse(Comparer.equals(3, 1));
 
+    assert.isTrue(Comparer.equals(true, true));
+    assert.isFalse(Comparer.equals(true, false));
+    assert.isFalse(Comparer.equals(false, true));
+    assert.isTrue(Comparer.equals(false, false));
+
     assert.isTrue(Comparer.equals("A", "A"));
     assert.isFalse(Comparer.equals("A", "B"));
 
@@ -122,6 +133,6 @@ class CompareTest {
 
     const customType = new CustomTypeInvalid("abc");
 
-    Comparer.equals(customType, customType)
+    Comparer.equals(customType, customType);
   }
 }
