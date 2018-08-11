@@ -1,6 +1,6 @@
-import { Moment } from 'moment';
 import Decimal from 'decimal.js';
 import * as Comparer from './comparer';
+import { KnownType } from "./common";
 
 export class ChainableIterator<T> implements IterableIterator<T> {
   constructor(private baseIterator: IterableIterator<T>) {
@@ -127,14 +127,14 @@ export class List<T> extends Array<T> {
       this.push(obj);
   }
 
-  public sortKey(key?: (x: T) => number | Date | Moment | string, reverse?: boolean): void
-  public sortKey(key?: (x: T) => (number | Date | Moment | string)[], reverse?: boolean[]): void
+  public sortKey(key?: (x: T) => KnownType, reverse?: boolean): void
+  public sortKey(key?: (x: T) => (KnownType)[], reverse?: boolean[]): void
   public sortKey(key?: (x: T) => any, reverse?: any): void {
     return this.ksort(key, reverse);
   }
 
-  public ksort(key?: (x: T) => number | Date | Moment | string, reverse?: boolean): void
-  public ksort(key?: (x: T) => (number | Date | Moment | string)[], reverse?: boolean[]): void
+  public ksort(key?: (x: T) => KnownType, reverse?: boolean): void
+  public ksort(key?: (x: T) => (KnownType)[], reverse?: boolean[]): void
   public ksort(key?: (x: T) => any, reverse?: any) {
     if (key === undefined || key === null)
       key = (x) => x;
@@ -163,8 +163,8 @@ export class List<T> extends Array<T> {
     this.sort((a, b) => cmp(a, b));
   }
 
-  public ksorted(key?: (x: T) => number | Date | Moment | string, reverse?: boolean): void
-  public ksorted(key?: (x: T) => (number | Date | Moment | string)[], reverse?: boolean[]): void
+  public ksorted(key?: (x: T) => KnownType, reverse?: boolean): void
+  public ksorted(key?: (x: T) => (KnownType)[], reverse?: boolean[]): void
   public ksorted(key?: (x: T) => any, reverse?: any): List<T> {
     let newList = new List<T>();
     newList.copyFrom(this);
@@ -172,8 +172,8 @@ export class List<T> extends Array<T> {
     return newList;
   }
 
-  public sorted(key?: (x: T) => number | Date | Moment | string, reverse?: boolean): void
-  public sorted(key?: (x: T) => (number | Date | Moment | string)[], reverse?: boolean[]): void
+  public sorted(key?: (x: T) => KnownType, reverse?: boolean): void
+  public sorted(key?: (x: T) => (KnownType)[], reverse?: boolean[]): void
   public sorted(key?: (x: T) => any, reverse?: any): List<T> {
     let newList = new List<T>();
     newList.copyFrom(this);

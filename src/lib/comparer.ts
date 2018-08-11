@@ -1,7 +1,7 @@
-import { Moment } from 'moment';
 import Decimal from 'decimal.js';
+import { KnownType } from "./common";
 
-export function toScalar(value: number | string | boolean | object | Date | Moment | Decimal): string | number {
+export function toScalar(value: KnownType): string | number {
   if (value === null || value === undefined)
     return null;
 
@@ -22,7 +22,7 @@ export function toScalar(value: number | string | boolean | object | Date | Mome
     throw new Error(`/${typeof valueOf}/ is not convertible to scalar`);
 }
 
-export function compare<T extends number | string | boolean | object | Date | Moment | Decimal>(x: T, y: T): number {
+export function compare<T extends KnownType>(x: T, y: T): number {
   const _x = toScalar(x);
   const _y = toScalar(y);
 
@@ -34,7 +34,7 @@ export function compare<T extends number | string | boolean | object | Date | Mo
   throw new Error(`invalid types for comparison, x: /${typeof(x)}/, y: /${typeof(y)}/`);
 }
 
-export function equals<T extends number | string | boolean | object | Date | Moment | Decimal>(x: T, y: T): boolean {
+export function equals<T extends KnownType>(x: T, y: T): boolean {
   if (x === undefined) x = null;
   if (y === undefined) y = null;
 
