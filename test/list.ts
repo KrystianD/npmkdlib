@@ -9,16 +9,16 @@ class ListTest {
   testConstructor() {
     let list1 = new List<string>(["A", "B"]);
 
-    assert.equal(list1[0], "A");
-    assert.equal(list1[1], "B");
+    assert.strictEqual(list1[0], "A");
+    assert.strictEqual(list1[1], "B");
 
     let list2 = new List<string>(5);
 
-    assert.equal(list2.length, 5);
+    assert.strictEqual(list2.length, 5);
 
     let list3 = new List<string>();
 
-    assert.equal(list3.length, 0);
+    assert.strictEqual(list3.length, 0);
   }
 
   @test
@@ -26,12 +26,12 @@ class ListTest {
     let list = new List<string>();
     list.push("A");
 
-    assert.equal(list[0], "A");
-    assert.equal(list.at(0), "A");
+    assert.strictEqual(list[0], "A");
+    assert.strictEqual(list.at(0), "A");
 
     list.clear();
 
-    assert.equal(list.length, 0);
+    assert.strictEqual(list.length, 0);
   }
 
   @test
@@ -41,14 +41,14 @@ class ListTest {
     list.push("A");
     list.push("B");
 
-    assert.equal(list[0], "A");
-    assert.equal(list[1], "A");
-    assert.equal(list[2], "B");
+    assert.strictEqual(list[0], "A");
+    assert.strictEqual(list[1], "A");
+    assert.strictEqual(list[2], "B");
 
     list.remove("A");
 
-    assert.equal(list[0], "A");
-    assert.equal(list[1], "B");
+    assert.strictEqual(list[0], "A");
+    assert.strictEqual(list[1], "B");
   }
 
   @test
@@ -59,14 +59,14 @@ class ListTest {
     list.push("B");
     list.push("C");
 
-    assert.equal(list[0], "A");
-    assert.equal(list[1], "A");
-    assert.equal(list[2], "B");
-    assert.equal(list[3], "C");
+    assert.strictEqual(list[0], "A");
+    assert.strictEqual(list[1], "A");
+    assert.strictEqual(list[2], "B");
+    assert.strictEqual(list[3], "C");
 
     list.removeAll(["A", "B"]);
 
-    assert.equal(list[0], "C");
+    assert.strictEqual(list[0], "C");
   }
 
   @test
@@ -89,10 +89,10 @@ class ListTest {
 
     list.ksort();
 
-    assert.equal(list[0], "A");
-    assert.equal(list[1], "A");
-    assert.equal(list[2], "B");
-    assert.equal(list[3], "C");
+    assert.strictEqual(list[0], "A");
+    assert.strictEqual(list[1], "A");
+    assert.strictEqual(list[2], "B");
+    assert.strictEqual(list[3], "C");
   }
 
   @test
@@ -105,10 +105,10 @@ class ListTest {
 
     list.ksort(x => x, false);
 
-    assert.equal(list[0], "A");
-    assert.equal(list[1], "A");
-    assert.equal(list[2], "B");
-    assert.equal(list[3], "C");
+    assert.strictEqual(list[0], "A");
+    assert.strictEqual(list[1], "A");
+    assert.strictEqual(list[2], "B");
+    assert.strictEqual(list[3], "C");
   }
 
   @test
@@ -121,10 +121,10 @@ class ListTest {
 
     list.ksort(x => x, true);
 
-    assert.equal(list[0], "C");
-    assert.equal(list[1], "B");
-    assert.equal(list[2], "A");
-    assert.equal(list[3], "A");
+    assert.strictEqual(list[0], "C");
+    assert.strictEqual(list[1], "B");
+    assert.strictEqual(list[2], "A");
+    assert.strictEqual(list[3], "A");
   }
 
   @test
@@ -184,10 +184,10 @@ class ListTest {
 
     list.insert(1, "X");
 
-    assert.equal(list[0], "A");
-    assert.equal(list[1], "X");
-    assert.equal(list[2], "B");
-    assert.equal(list[3], "C");
+    assert.strictEqual(list[0], "A");
+    assert.strictEqual(list[1], "X");
+    assert.strictEqual(list[2], "B");
+    assert.strictEqual(list[3], "C");
   }
 
   @test
@@ -201,12 +201,12 @@ class ListTest {
     list.insertAfter("B", "Y");
     list.insertAfter("C", "Z");
 
-    assert.equal(list[0], "A");
-    assert.equal(list[1], "X");
-    assert.equal(list[2], "B");
-    assert.equal(list[3], "Y");
-    assert.equal(list[4], "C");
-    assert.equal(list[5], "Z");
+    assert.strictEqual(list[0], "A");
+    assert.strictEqual(list[1], "X");
+    assert.strictEqual(list[2], "B");
+    assert.strictEqual(list[3], "Y");
+    assert.strictEqual(list[4], "C");
+    assert.strictEqual(list[5], "Z");
   }
 
   @test
@@ -220,9 +220,9 @@ class ListTest {
       list.insertBefore("E", "X");
     });
 
-    assert.equal(list[0], "A");
-    assert.equal(list[1], "B");
-    assert.equal(list[2], "C");
+    assert.strictEqual(list[0], "A");
+    assert.strictEqual(list[1], "B");
+    assert.strictEqual(list[2], "C");
   }
 
   @test
@@ -232,13 +232,13 @@ class ListTest {
     list.push("B");
     list.push("C");
 
-    assert.equal(list.kjoinString(""), "ABC");
-    assert.equal(list.kjoinString(","), "A,B,C");
-    assert.equal(list.kjoinString(", "), "A, B, C");
+    assert.strictEqual(list.kjoinString(""), "ABC");
+    assert.strictEqual(list.kjoinString(","), "A,B,C");
+    assert.strictEqual(list.kjoinString(", "), "A, B, C");
 
     let list2 = new List<any>();
 
-    assert.equal(list2.kjoinString(","), "");
+    assert.strictEqual(list2.kjoinString(","), "");
   }
 
   @test
@@ -248,11 +248,79 @@ class ListTest {
 
     let list2 = List.create<string>(["A", "B", "C"]);
 
-    assert.equal(list1[0], "A");
-    assert.equal(list1[1], "B");
-    assert.equal(list1[2], "C");
-    assert.equal(list2[0], "A");
-    assert.equal(list2[1], "B");
-    assert.equal(list2[2], "C");
+    assert.strictEqual(list1[0], "A");
+    assert.strictEqual(list1[1], "B");
+    assert.strictEqual(list1[2], "C");
+    assert.strictEqual(list2[0], "A");
+    assert.strictEqual(list2[1], "B");
+    assert.strictEqual(list2[2], "C");
+  }
+
+  @test
+  testToMap() {
+    let list = new List<any>();
+    list.push(["A", 1]);
+    list.push(["B", 2]);
+
+    const map = list.toMap(x => x[0]);
+
+    assert.strictEqual(map.size, 2);
+    assert.deepEqual(map.get("A"), ["A", 1]);
+    assert.deepEqual(map.get("B"), ["B", 2]);
+  }
+
+  @test
+  testToMapValue() {
+    let list = new List<any>();
+    list.push(["A", 1]);
+    list.push(["B", 2]);
+
+    const map = list.toMap(x => x[0], x => x[1]);
+
+    assert.strictEqual(map.size, 2);
+    assert.strictEqual(map.get("A"), 1);
+    assert.strictEqual(map.get("B"), 2);
+  }
+
+  @test
+  testToMapMultiple() {
+    let list = new List<any>();
+    list.push(["A", 1]);
+    list.push(["B", 2]);
+    list.push(["A", 3]);
+
+    const map = list.toMap(x => x[0], x => x[1]);
+
+    assert.strictEqual(map.size, 2);
+    assert.strictEqual(map.get("A"), 3);
+    assert.strictEqual(map.get("B"), 2);
+  }
+
+  @test
+  testGroupBy() {
+    let list = new List<any>();
+    list.push(["A", 1]);
+    list.push(["B", 2]);
+    list.push(["A", 3]);
+
+    const map = list.groupBy(x => x[0]);
+
+    assert.strictEqual(map.size, 2);
+    assert.deepEqual(map.get("A"), List.create([["A", 1], ["A", 3]]));
+    assert.deepEqual(map.get("B"), List.create([["B", 2]]));
+  }
+
+  @test
+  testGroupByValue() {
+    let list = new List<any>();
+    list.push(["A", 1]);
+    list.push(["B", 2]);
+    list.push(["A", 3]);
+
+    const map = list.groupBy(x => x[0], x => x[1]);
+
+    assert.strictEqual(map.size, 2);
+    assert.deepEqual(map.get("A"), List.create([1, 3]));
+    assert.deepEqual(map.get("B"), List.create([2]));
   }
 }

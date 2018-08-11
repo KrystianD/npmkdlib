@@ -300,6 +300,39 @@ export class List<T> extends Array<T> {
     return output;
   }
 
+  public toMap<K>(key: (x: T) => K): Map<K, T>;
+  public toMap<K, V>(key: (x: T) => K, value: (x: T) => V): Map<K, V>;
+  public toMap<K, V>(key: (x: T) => K, value: (x: T) => V = null): Map<K, V> {
+    const map = new Map<K, V>();
+
+    if (value === null)
+      value = (x: any) => x;
+
+    for (let item of this)
+      map.set(key(item), value(item));
+    return map;
+  }
+
+  public groupBy<K>(key: (x: T) => K): Map<K, List<T>>
+  public groupBy<K, V>(key: (x: T) => K, value: (x: T) => V): Map<K, List<V>>
+  public groupBy<K, V>(key: (x: T) => K, value: (x: T) => V = null): Map<K, List<V>> {
+    const map = new Map<K, List<V>>();
+
+    if (value === null)
+      value = (x: any) => x;
+
+    for (let item of this) {
+      const itemKey = key(item);
+      const itemValue = value(item);
+
+      const entryList = map.get(itemKey) || new List<V>();
+      entryList.push(itemValue);
+      map.set(itemKey, entryList);
+    }
+
+    return map;
+  }
+
   public static create<T>(iterable: Iterable<T> | Array<T> | T[]): List<T> {
     const list = new List<T>();
     list.copyFrom(Array.from(iterable));
