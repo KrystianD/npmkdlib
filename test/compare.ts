@@ -135,4 +135,15 @@ class CompareTest {
 
     Comparer.equals(customType, customType);
   }
+
+  @test
+  testInconvertible() {
+    assert.throw(() => Comparer.equals("a", <any>2));
+
+    assert.isTrue(Comparer.equals(2, 2, true));
+
+    assert.isFalse(Comparer.equals({}, {}, true));
+
+    assert.isFalse(Comparer.equals("a", <any>2, true));
+  }
 }
