@@ -96,6 +96,27 @@ class ListTest {
   }
 
   @test
+  testSortedSimple1() {
+    let list = new List<any>();
+    list.push("B");
+    list.push("C");
+    list.push("A");
+    list.push("A");
+
+    let list2 = list.ksorted();
+
+    assert.strictEqual(list[0], "B");
+    assert.strictEqual(list[1], "C");
+    assert.strictEqual(list[2], "A");
+    assert.strictEqual(list[3], "A");
+
+    assert.strictEqual(list2[0], "A");
+    assert.strictEqual(list2[1], "A");
+    assert.strictEqual(list2[2], "B");
+    assert.strictEqual(list2[3], "C");
+  }
+
+  @test
   testSortSimple2() {
     let list = new List<any>();
     list.push("B");

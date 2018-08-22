@@ -163,8 +163,8 @@ export class List<T> extends Array<T> {
     this.sort((a, b) => cmp(a, b));
   }
 
-  public ksorted(key?: (x: T) => KnownType, reverse?: boolean): void
-  public ksorted(key?: (x: T) => (KnownType)[], reverse?: boolean[]): void
+  public ksorted(key?: (x: T) => KnownType, reverse?: boolean): List<T>
+  public ksorted(key?: (x: T) => (KnownType)[], reverse?: boolean[]): List<T>
   public ksorted(key?: (x: T) => any, reverse?: any): List<T> {
     let newList = new List<T>();
     newList.copyFrom(this);
@@ -172,8 +172,8 @@ export class List<T> extends Array<T> {
     return newList;
   }
 
-  public sorted(key?: (x: T) => KnownType, reverse?: boolean): void
-  public sorted(key?: (x: T) => (KnownType)[], reverse?: boolean[]): void
+  public sorted(key?: (x: T) => KnownType, reverse?: boolean): List<T>
+  public sorted(key?: (x: T) => (KnownType)[], reverse?: boolean[]): List<T>
   public sorted(key?: (x: T) => any, reverse?: any): List<T> {
     let newList = new List<T>();
     newList.copyFrom(this);
