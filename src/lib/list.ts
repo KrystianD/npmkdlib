@@ -109,6 +109,10 @@ export class List<T> extends Array<T> {
     this.splice(this.indexOf(element), 1);
   }
 
+  public removeAt(index: number) {
+    this.splice(index, 1);
+  }
+
   public clear() {
     this.length = 0;
   }

@@ -40,15 +40,31 @@ class ListTest {
     list.push("A");
     list.push("A");
     list.push("B");
+    list.push("C");
 
+    assert.strictEqual(list.length, 4);
     assert.strictEqual(list[0], "A");
     assert.strictEqual(list[1], "A");
     assert.strictEqual(list[2], "B");
+    assert.strictEqual(list[3], "C");
 
     list.remove("A");
 
+    assert.strictEqual(list.length, 3);
     assert.strictEqual(list[0], "A");
     assert.strictEqual(list[1], "B");
+    assert.strictEqual(list[2], "C");
+
+    list.removeAt(0);
+
+    assert.strictEqual(list.length, 2);
+    assert.strictEqual(list[0], "B");
+    assert.strictEqual(list[1], "C");
+
+    list.removeAt(-1);
+
+    assert.strictEqual(list.length, 1);
+    assert.strictEqual(list[0], "B");
   }
 
   @test
