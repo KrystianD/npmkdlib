@@ -268,7 +268,7 @@ export class List<T> extends Array<T> {
       let itemKey = key ? key(item) : item;
       if (!added.has(itemKey)) {
         newList.push(item);
-        added.set(item, true);
+        added.set(itemKey, true);
       }
     }
     return newList;
