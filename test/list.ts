@@ -213,6 +213,22 @@ class ListTest {
   }
 
   @test
+  testSortWithNull() {
+    let list = new List<any>();
+    list.push(2);
+    list.push(3);
+    list.push(null);
+    list.push(4);
+
+    list.ksort();
+
+    assert.equal(list[0], null);
+    assert.equal(list[1], 2);
+    assert.equal(list[2], 3);
+    assert.equal(list[3], 4);
+  }
+
+  @test
   testInsert() {
     let list = new List<any>();
     list.push("A");

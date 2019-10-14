@@ -28,6 +28,13 @@ export function compare<T extends KnownType>(x: T, y: T): number {
   const _x = toScalar(x);
   const _y = toScalar(y);
 
+  if (_x === null && _y === null)
+    return 0;
+  if (_x === null && _y !== null)
+    return -1;
+  if (_x !== null && _y === null)
+    return 1;
+
   if (typeof _x == "number" && typeof _y == "number")
     return _x - _y;
   if (typeof _x == "string" && typeof _y == "string")
