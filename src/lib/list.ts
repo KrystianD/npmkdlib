@@ -1,5 +1,5 @@
-import Decimal from 'decimal.js';
-import * as Comparer from './comparer';
+import Decimal from "decimal.js";
+import * as Comparer from "./comparer";
 import { KnownType } from "./common";
 
 export class ChainableIterator<T> implements IterableIterator<T> {
@@ -65,7 +65,7 @@ export class ChainableIterator<T> implements IterableIterator<T> {
 }
 
 function isArray(value: any) {
-  return value && typeof value === 'object' && value.constructor === Array;
+  return value && typeof value === "object" && value.constructor === Array;
 }
 
 export class List<T> extends Array<T> {
@@ -75,7 +75,7 @@ export class List<T> extends Array<T> {
   constructor(arrayLengthOrItems: any = null) {
     if (arrayLengthOrItems === null)
       super();
-    else if (typeof arrayLengthOrItems == 'number')
+    else if (typeof arrayLengthOrItems == "number")
       super(arrayLengthOrItems);
     else if (isArray(arrayLengthOrItems))
       super(...arrayLengthOrItems);
@@ -302,6 +302,14 @@ export class List<T> extends Array<T> {
       output += item;
     }
     return output;
+  }
+
+  public kcount(key: (x: T) => boolean = (x) => true): number {
+    let cnt = 0;
+    for (let item of this)
+      if (key(item))
+        cnt++;
+    return cnt;
   }
 
   public toMap<K>(key: (x: T) => K): Map<K, T>;

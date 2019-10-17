@@ -1,4 +1,4 @@
-import { List } from '../src';
+import { List } from "../src";
 
 import { assert } from "chai";
 import { suite, test } from "mocha-typescript";
@@ -226,6 +226,19 @@ class ListTest {
     assert.equal(list[1], 2);
     assert.equal(list[2], 3);
     assert.equal(list[3], 4);
+  }
+
+  @test
+  testCount() {
+    let list = new List<any>();
+    list.push("A");
+    list.push("B");
+    list.push("B");
+    list.push("C");
+
+    assert.equal(list.kcount(x => x === "A"), 1);
+    assert.equal(list.kcount(x => x === "B"), 2);
+    assert.equal(list.kcount(x => x === "D"), 0);
   }
 
   @test
