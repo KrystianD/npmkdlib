@@ -248,6 +248,17 @@ export class List<T> extends Array<T> {
     return newList;
   }
 
+  public kmapMany<U>(callbackfn: (value: T, index: number) => List<U>): List<U> {
+    let newList = new List<U>();
+    let index = 0;
+    for (let item of this) {
+      for (let item2 of callbackfn(item, index))
+        newList.push(item2);
+      index += 1;
+    }
+    return newList;
+  }
+
   /**
    * Performs the specified action for each element in an array.
    * @param callbackfn  A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.

@@ -389,4 +389,37 @@ class ListTest {
     assert.deepEqual(map.get("A"), List.create([1, 3]));
     assert.deepEqual(map.get("B"), List.create([2]));
   }
+
+  @test
+  testMap() {
+    let list = new List<any>();
+    list.push(["A", 1]);
+    list.push(["B", 2]);
+    list.push(["A", 3]);
+
+    const list2 = list.kmap(x => x[0]);
+
+    assert.strictEqual(list2.length, 3);
+    assert.strictEqual(list2[0], "A");
+    assert.strictEqual(list2[1], "B");
+    assert.strictEqual(list2[2], "A");
+  }
+
+  @test
+  testMapMany() {
+    let list = new List<any>();
+    list.push(["A", "B"]);
+    list.push(["C", "D"]);
+    list.push(["E", "F"]);
+
+    const list2 = list.kmapMany(x => x);
+
+    assert.strictEqual(list2.length, 6);
+    assert.strictEqual(list2[0], "A");
+    assert.strictEqual(list2[1], "B");
+    assert.strictEqual(list2[2], "C");
+    assert.strictEqual(list2[3], "D");
+    assert.strictEqual(list2[4], "E");
+    assert.strictEqual(list2[5], "F");
+  }
 }
