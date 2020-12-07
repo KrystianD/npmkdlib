@@ -405,4 +405,28 @@ export class List<T> extends Array<T> {
     }
     return output;
   }
+
+  public kexcept(arr: Array<T>, key: (x: T) => any = null): List<T> {
+    if (key === null)
+      key = (x: T) => x;
+
+    let newList = new List<T>();
+    const arrKeys = List.create(arr).toMap(key);
+    for (let item of this)
+      if (!arrKeys.has(key(item)))
+        newList.push(item);
+    return newList;
+  }
+
+  public kintersect(arr: Array<T>, key: (x: T) => any = null): List<T> {
+    if (key === null)
+      key = (x: T) => x;
+
+    let newList = new List<T>();
+    const arrKeys = List.create(arr).toMap(key);
+    for (let item of this)
+      if (arrKeys.has(key(item)))
+        newList.push(item);
+    return newList;
+  }
 }

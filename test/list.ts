@@ -422,4 +422,70 @@ class ListTest {
     assert.strictEqual(list2[4], "E");
     assert.strictEqual(list2[5], "F");
   }
+
+  @test
+  testExcept() {
+    let list1 = new List<any>();
+    list1.push("A");
+    list1.push("B");
+    list1.push("A");
+    list1.push("C");
+    list1.push("C");
+    list1.push("D");
+
+    let list2 = new List<any>();
+    list2.push("A");
+    list2.push("D");
+
+    let list = list1.kexcept(list2, x => x[0]);
+
+    assert.strictEqual(list.length, 3);
+    assert.strictEqual(list[0], "B");
+    assert.strictEqual(list[1], "C");
+    assert.strictEqual(list[2], "C");
+  }
+
+  @test
+  testExceptKey() {
+    let list1 = new List<any>();
+    list1.push(["A", 1]);
+    list1.push(["B", 2]);
+    list1.push(["A", 3]);
+    list1.push(["C", 4]);
+    list1.push(["C", 4]);
+    list1.push(["D", 5]);
+
+    let list2 = new List<any>();
+    list2.push(["A", 1]);
+    list2.push(["D", 8]);
+
+    let list = list1.kexcept(list2, x => x[0]);
+
+    assert.strictEqual(list.length, 3);
+    assert.deepEqual(list[0], ["B", 2]);
+    assert.deepEqual(list[1], ["C", 4]);
+    assert.deepEqual(list[2], ["C", 4]);
+  }
+
+  @test
+  testIntersect() {
+    let list1 = new List<any>();
+    list1.push("A");
+    list1.push("B");
+    list1.push("A");
+    list1.push("C");
+    list1.push("D");
+
+    let list2 = new List<any>();
+    list2.push("A");
+    list2.push("D");
+    list2.push("E");
+
+    let list = list1.kintersect(list2, x => x[0]);
+
+    assert.strictEqual(list.length, 3);
+    assert.strictEqual(list[0], "A");
+    assert.strictEqual(list[1], "A");
+    assert.strictEqual(list[2], "D");
+  }
 }
